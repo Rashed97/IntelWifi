@@ -262,7 +262,6 @@ static int iwl_request_firmware(struct iwl_drv *drv, bool first)
     
     IOLockSleep(drv->request_firmware_complete, drv, THREAD_INTERRUPTIBLE);
     IOLockUnlock(drv->request_firmware_complete);
-    
     return kIOReturnSuccess;
 }
 
@@ -1469,8 +1468,8 @@ static void iwl_req_fw_callback(const struct firmware *ucode_raw, void *context)
     IOLockLock(drv->request_firmware_complete);
     IOLockWakeup(drv->request_firmware_complete, drv, true);
     IOLockUnlock(drv->request_firmware_complete);
-	
-	/*
+
+    /*
 	 * Load the module last so we don't block anything
 	 * else from proceeding if the module fails to load
 	 * or hangs loading.
@@ -1562,10 +1561,14 @@ struct iwl_drv *iwl_drv_start(struct iwl_trans *trans)
 		goto err_fw;
 	}
     
-    IOLockFree(drv->request_firmware_complete);
-    drv->request_firmware_complete = NULL;
-
-	return drv;
+    if (drv->request_firmware_complete) {
+        IOLockFree(drv->request_firmware_complete);
+        drv->request_firmware_complete = NULL;
+        return drv;
+    } else {
+        IOLog("drv messed up\n");
+        goto err;
+    }
 
 err_fw:
 #ifdef CONFIG_IWLWIFI_DEBUGFS

@@ -210,13 +210,12 @@ bool IntelWifi::start(IOService *provider) {
 #endif
 
     fTrans->drv = iwl_drv_start(fTrans);
-    
+
     if (!fTrans->drv) {
         TraceLog("DRV init failed!");
         releaseAll();
         return false;
     }
-
     
     /* if RTPM is in use, enable it in our device */
     if (fTrans->runtime_pm_mode != IWL_PLAT_PM_MODE_DISABLED) {
@@ -230,11 +229,10 @@ bool IntelWifi::start(IOService *provider) {
         registerPowerDriver(this, gPowerStates, kNumPowerStates);
         setIdleTimerPeriod(iwlwifi_mod_params.d0i3_timeout);
     }
-    
     transOps = new IwlTransOps(this);
     opmode = new IwlDvmOpMode(transOps);
     hw = opmode->start(fTrans, fTrans->cfg, &fTrans->drv->fw);
-    
+
     if (!hw) {
         TraceLog("ERROR: Error while preparing HW");
         releaseAll();

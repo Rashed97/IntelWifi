@@ -18,7 +18,11 @@ IwlDvmOpMode::IwlDvmOpMode(TransOps *ops) {
 
 struct ieee80211_hw *IwlDvmOpMode::start(struct iwl_trans *trans, const struct iwl_cfg *cfg, const struct iwl_fw *fw) {
     priv = iwl_op_mode_dvm_start(trans, cfg, fw);
-    return priv->hw;
+    if (priv) {
+        return priv->hw;
+    } else {
+        return NULL;
+    }
 }
 
 void IwlDvmOpMode::nic_config(struct iwl_priv *priv) {
