@@ -944,7 +944,10 @@
 					"$(inherited)",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
-				HEADER_SEARCH_PATHS = IntelWifi/porting/;
+				HEADER_SEARCH_PATHS = (
+					IntelWifi/,
+					IntelWifi/porting/,
+				);
 				INFOPLIST_FILE = IntelWifi/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = net.rpeshkov.IntelWifi;
@@ -971,7 +974,10 @@
 					"CONFIG_IWLWIFI_PCIE_RTPM=1",
 				);
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
-				HEADER_SEARCH_PATHS = IntelWifi/porting/;
+				HEADER_SEARCH_PATHS = (
+					IntelWifi/,
+					IntelWifi/porting/,
+				);
 				INFOPLIST_FILE = IntelWifi/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MODULE_NAME = net.rpeshkov.IntelWifi;
