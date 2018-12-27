@@ -7,6 +7,7 @@ extern "C" {
 #include <IOKit/IOInterruptController.h>
 #include <IOKit/IOCommandGate.h>
 #include "IwlDvmOpMode.hpp"
+#include "IwlMvmOpMode.hpp"
 
 #include "IO80211WorkLoop.h"
 
@@ -230,7 +231,12 @@ bool IntelWifi::start(IOService *provider) {
         setIdleTimerPeriod(iwlwifi_mod_params.d0i3_timeout);
     }
     transOps = new IwlTransOps(this);
-    opmode = new IwlDvmOpMode(transOps);
+    switch (fTrans->drv->fw.type) {
+        case IWL_FW_DVM:
+            opmode = new IwlDvmOpMode(transOps);
+        case IWL_FW_MVM:
+            opmode = new IwlMvmOpMode(transOps);
+    }
     hw = opmode->start(fTrans, fTrans->cfg, &fTrans->drv->fw);
 
     if (!hw) {
