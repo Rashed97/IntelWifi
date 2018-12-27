@@ -37,10 +37,6 @@ extern "C" {
 #include "IwlOpModeOps.h"
 
 
-// Configuration
-#define CONFIG_IWLMVM // Need NVM mode at least to see that code is compiling
-#define CONFIG_IWLWIFI_PCIE_RTPM // Powerman
-
 #define    RELEASE(x)    if(x){(x)->release();(x)=NULL;}
 
 
