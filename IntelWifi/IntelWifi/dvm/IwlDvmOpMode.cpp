@@ -17,7 +17,7 @@ IwlDvmOpMode::IwlDvmOpMode(TransOps *ops) {
 
 
 struct ieee80211_hw *IwlDvmOpMode::start(struct iwl_trans *trans, const struct iwl_cfg *cfg, const struct iwl_fw *fw) {
-    priv = iwl_op_mode_dvm_start(trans, cfg, fw);
+    priv = IWL_OP_MODE_GET_DVM(iwl_op_mode_dvm_start(trans, cfg, fw));
     if (priv) {
         return priv->hw;
     } else {
@@ -25,15 +25,16 @@ struct ieee80211_hw *IwlDvmOpMode::start(struct iwl_trans *trans, const struct i
     }
 }
 
-void IwlDvmOpMode::nic_config(struct iwl_priv *priv) {
+void IwlDvmOpMode::nic_config(struct iwl_op_mode *op_mode) {
     iwl_nic_config(this->priv);
 }
 
-void IwlDvmOpMode::stop(struct iwl_priv *priv) {
+void IwlDvmOpMode::stop(struct iwl_op_mode *op_mode) {
+    struct iwl_priv *priv = IWL_OP_MODE_GET_DVM(op_mode);
     iwl_op_mode_dvm_stop(priv);
 }
 
-void IwlDvmOpMode::rx(struct iwl_priv *priv, struct napi_struct *napi, struct iwl_rx_cmd_buffer *rxb) {
+void IwlDvmOpMode::rx(struct iwl_op_mode *op_mode, struct napi_struct *napi, struct iwl_rx_cmd_buffer *rxb) {
     iwl_rx_dispatch(this->priv, napi, rxb);
 }
 

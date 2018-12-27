@@ -273,9 +273,9 @@ void IntelWifi::stop(IOService *provider) {
         }
     }
     
-    struct iwl_priv *priv = (struct iwl_priv *)hw->priv;
+    struct iwl_op_mode *op_mode = (struct iwl_op_mode *)hw->priv;
 
-    opmode->stop(priv);
+    opmode->stop(op_mode);
     iwl_drv_stop(fTrans->drv);
     iwl_trans_pcie_free(fTrans);
     fTrans = NULL;

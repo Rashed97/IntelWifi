@@ -43,10 +43,10 @@ public:
     IwlDvmOpMode(TransOps *ops);
     struct ieee80211_hw *start(struct iwl_trans *trans, const struct iwl_cfg *cfg,
                                const struct iwl_fw *fw) override;
-    void nic_config(struct iwl_priv *priv) override;
+    void nic_config(struct iwl_op_mode *op_mode) override;
     
-    void stop(struct iwl_priv *priv) override;
-    void rx(struct iwl_priv *priv, struct napi_struct *napi, struct iwl_rx_cmd_buffer *rxb) override;
+    void stop(struct iwl_op_mode *op_mode) override;
+    void rx(struct iwl_op_mode *op_mode, struct napi_struct *napi, struct iwl_rx_cmd_buffer *rxb) override;
     
 //    void add_interface(struct ieee80211_vif *vif) override;
 //    void channel_switch(struct iwl_priv *priv, struct ieee80211_vif *vif, struct ieee80211_channel_switch *chsw) override;
@@ -62,7 +62,7 @@ public:
 private:
     // main.c
     void iwl_down(struct iwl_priv *priv); // line 916
-    struct iwl_priv *iwl_op_mode_dvm_start(struct iwl_trans *trans,
+    struct iwl_op_mode *iwl_op_mode_dvm_start(struct iwl_trans *trans,
                                            const struct iwl_cfg *cfg,
                                            const struct iwl_fw *fw); // line 1232
     void iwl_op_mode_dvm_stop(struct iwl_priv* priv); // line 1524

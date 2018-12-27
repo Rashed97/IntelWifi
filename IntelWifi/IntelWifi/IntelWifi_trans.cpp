@@ -414,6 +414,7 @@ int IntelWifi::iwl_pcie_nic_init(struct iwl_trans *trans)
     iwl_pcie_set_pwr(trans, false);
     
     opmode->nic_config(0);
+    //iwl_op_mode_nic_config(trans->op_mode);
     
     /* Allocate the RX queue, or reset if it is already allocated */
     iwl_pcie_rx_init(trans);
